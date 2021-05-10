@@ -1,8 +1,7 @@
-# NODE_SEQUALIZE
+# NODE_SEQUELIZE
 
 > Simple Crud Operation for users, posts,likes and comments. This app uses Node, Express, Sequalize (Postgres)
 
-## Quick Start
 
 # Install dependencies
 npm install
