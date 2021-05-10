@@ -24,7 +24,7 @@ const Op = Sequelize.Op;
 //         .catch(err => console.log("ssssssss", err)
 //         ));
 
-
+// Get post list
 router.get('/', (req, res) => {
     let userId = 1;
     model.posts.findAll({
@@ -55,7 +55,7 @@ router.get('/', (req, res) => {
         )
 });
 
-// add user 
+// add post 
 router.post('/add', (req, res) => {
     let {
         userId,
@@ -90,6 +90,70 @@ router.post('/add', (req, res) => {
             .catch(err => res.send(err))
     }
 });
+
+// update post 
+router.patch('/update', (req, res) => {
+    let {
+        postId,
+        title,
+        description,
+    } = req.body;
+
+    let errors = [];
+
+    // Validate Fields
+    if (!postId) {
+        errors.push("userId can't be empty");
+    }
+    if (!title) {
+        errors.push("title can't be empty");
+    }
+    if (!description) {
+        errors.push("description can't be empty");
+    }
+    // Check for errors
+    if (errors.length > 0) {
+        res.send(errors);
+    }
+    else {
+        // Insert into table
+        model.posts.update({
+            title,
+            description,
+        }, { where: { id: postId } })
+            .then(post => res.send("Post has been Updated"))
+            .catch(err => res.send(err))
+    }
+});
+
+
+
+// delete post 
+router.delete('/delete', (req, res) => {
+    let {
+        postId
+    } = req.body;
+
+    let errors = [];
+
+    // Validate Fields
+    if (!postId) {
+        errors.push("userId can't be empty");
+    }
+
+    // Check for errors
+    if (errors.length > 0) {
+        res.send(errors);
+    }
+    else {
+        // Insert into table
+        model.posts.destroy(
+            { where: { id: postId } })
+            .then(post => res.send("Post has been Deleted"))
+            .catch(err => res.send(err))
+    }
+});
+
 
 
 

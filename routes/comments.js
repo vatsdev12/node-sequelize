@@ -4,13 +4,13 @@ const model = require('../models');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
-// Get users list
+// Get comments list
 router.get('/', (req, res) =>
     model.comments.findAll({ include: [{ model: model.posts }] })
         .then(users => res.send(users))
         .catch(err => res.send(err)));
 
-// add user 
+// add comment 
 router.post('/add', (req, res) => {
     let {
         postId,
@@ -41,7 +41,7 @@ router.post('/add', (req, res) => {
             userId,
             comment
         })
-            .then(user => res.send(user))
+            .then(comment => res.send(comment))
             .catch(err => res.send(err))
     }
 });

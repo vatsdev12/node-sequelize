@@ -4,13 +4,13 @@ const model = require('../models');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
-// Get users list
+// Get likes list
 router.get('/', (req, res) =>
     model.likes.findAll({ include: [{ model: model.posts }] })
         .then(users => res.send(users))
         .catch(err => res.send(err)));
 
-// add user 
+// add like 
 router.post('/add', (req, res) => {
     let {
         postId,
