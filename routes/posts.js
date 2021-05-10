@@ -27,6 +27,22 @@ const Op = Sequelize.Op;
 // Get post list
 router.get('/', (req, res) => {
     let userId = 1;
+    let {
+        limit,
+        offset } = req.query;
+    let errors = [];
+
+    offset = +offset;
+    limit = +limit;
+    if (!limit && isNaN(limit)) {
+        errors.push("limit can't be empty");
+    }
+    if (!offset && isNaN(offset)) {
+        errors.push("offset can't be empty");
+    }
+    if (errors.length > 0) {
+        res.send(errors);
+    }
     model.posts.findAll({
         attributes: {
             include:
@@ -49,6 +65,8 @@ router.get('/', (req, res) => {
             [
                 { model: model.users, attributes: ["firstName", "lastName"] },
                 { model: model.comments, limit: 1 }],
+        limit,
+        offset
     })
         .then(posts => res.send(posts))
         .catch(err => console.log("ssssssss", err)
