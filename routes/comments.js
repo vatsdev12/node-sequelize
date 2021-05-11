@@ -6,7 +6,7 @@ const Op = Sequelize.Op;
 
 // Get comments list
 router.get('/', (req, res) =>
-    model.comments.findAll({ include: [{ model: model.posts }] })
+    model.comments.findAll({ include: [{ model: model.posts },{ model: model.users, attributes: ["firstName", "lastName"] }] })
         .then(users => res.send(users))
         .catch(err => res.send(err)));
 

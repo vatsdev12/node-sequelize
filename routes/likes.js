@@ -6,7 +6,7 @@ const Op = Sequelize.Op;
 
 // Get likes list
 router.get('/', (req, res) =>
-    model.likes.findAll({ include: [{ model: model.posts }] })
+    model.likes.findAll({ include: [{ model: model.posts }, { model: model.users, attributes: ["firstName", "lastName"] }] })
         .then(users => res.send(users))
         .catch(err => res.send(err)));
 
@@ -28,7 +28,7 @@ router.post('/add', (req, res) => {
     if (!userId) {
         errors.push("userId can't be empty");
     }
-    
+
     // Check for errors
     if (errors.length > 0) {
         res.send(errors);
