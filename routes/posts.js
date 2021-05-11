@@ -26,19 +26,23 @@ const Op = Sequelize.Op;
 
 // Get post list
 router.get('/', (req, res) => {
-    let userId = 1;
     let {
         limit,
-        offset } = req.query;
+        offset ,
+        userId} = req.query;
     let errors = [];
 
     offset = +offset;
     limit = +limit;
+    userId=+userId;
     if (!limit && isNaN(limit)) {
         errors.push("limit can't be empty");
     }
     if (!offset && isNaN(offset)) {
         errors.push("offset can't be empty");
+    }
+    if (!userId && isNaN(userId)) {
+        errors.push("userId can't be empty");
     }
     if (errors.length > 0) {
         res.send(errors);
